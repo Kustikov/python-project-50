@@ -11,7 +11,7 @@ package-install:
 	python3 -m pip install --user dist/*.whl
 
 make lint:
-	poetry run flake8 hexlet_code
+	poetry run flake8 gendiff
 
 make formate:
-	poetry run black hexlet_code
+	poetry run black gendiff
