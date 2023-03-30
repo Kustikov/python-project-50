@@ -10,7 +10,7 @@ packages = [{include = "gendiff"}]
 python = ">=3.8.1,<4.0"
 
 [tool.poetry.scripts]
-gendiff = "gendiff.scripts.gendiff:main"
+gendiff = "gendiff.scripts.gendiff_scrypt:main"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2.2"
