@@ -42,5 +42,5 @@ def generate_diff(path1, path2):
     new_result = ""
     for i in result:
         new_result = f"{new_result} {i}\n"
-    print((f"{{\n{new_result}\n}}"))
-    return f"{{\n{new_result}\n}}"
+    print((f"{{\n{new_result}}}"))
+    return f"{{\n{new_result}}}"
