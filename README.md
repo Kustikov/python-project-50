@@ -2,8 +2,12 @@
 [![Actions Status](https://github.com/Kustikov/python-project-50/workflows/hexlet-check/badge.svg)](https://github.com/Kustikov/python-project-50/actions)
 
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/b1c5ca51eae2bfda2ee9/maintainability)](https://codeclimate.com/github/Kustikov/python-project-50/
-maintainability)
+[![Maintainability]((https://api.codeclimate.com/v1/badges/b1c5ca51eae2bfda2ee9/maintainability)](https://codeclimate.com/github/Kustikov/python-project-50/
+maintainability))
+
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/0f5767cd23e0925c2df1/maintainability)](https://codeclimate.com/github/Kustikov/python-project-49/maintainability)
+### Описание
 
 
 ### Gendiff script example:
