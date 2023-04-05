@@ -1,6 +1,6 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Kustikov/python-project-50/workflows/hexlet-check/badge.svg)](https://github.com/Kustikov/python-project-50/actions)
-
+[![Test Python App](https://github.com/Kustikov/python-project-50/actions/workflows/testing.yml/badge.svg?branch=main&event=push)](https://github.com/Kustikov/python-project-50/actions/workflows/testing.yml)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/b1c5ca51eae2bfda2ee9/maintainability)](https://codeclimate.com/github/Kustikov/python-project-50/maintainability)
 
