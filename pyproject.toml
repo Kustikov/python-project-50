@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "hexlet-code"
 version = "0.1.0"
-description = "difference calculator"
+description = "generate diff in files"
 authors = ["kustikov <pasha_k1987@mail.ru>"]
 readme = "README.md"
 packages = [{include = "gendiff"}]
@@ -16,6 +16,7 @@ gendiff = "gendiff.scripts.gendiff_scrypt:main"
 pytest = "^7.2.2"
 flake8 = "^6.0.0"
 black = "^23.3.0"
+pytest-cov = "^4.0.0"
 
 [build-system]
 requires = ["poetry-core"]
