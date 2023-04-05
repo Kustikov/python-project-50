@@ -9,7 +9,8 @@ def main():
     )
     parser.add_argument("first_file")
     parser.add_argument("second_file")
-    parser.add_argument("-f", "--format", help="set format of output", default="JSON")
+    parser.add_argument("-f", "--format", help="set format of output",
+                        default="JSON")
     args = parser.parse_args()
     path1 = args.first_file
     path2 = args.second_file
