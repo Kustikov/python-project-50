@@ -14,7 +14,8 @@ def main():
     args = parser.parse_args()
     path1 = args.first_file
     path2 = args.second_file
-
+    print(path1)
+    print(path2)
     if args.format == "JSON":
         generate_diff(path1, path2)
     else:
