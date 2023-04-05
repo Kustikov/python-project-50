@@ -15,3 +15,9 @@ make lint:
 
 make formate:
 	poetry run black gendiff
+
+make test:
+	poetry run pytest
+
+test-coverage:
+	poetry run pytest --cov=gendiff --cov-report xml
