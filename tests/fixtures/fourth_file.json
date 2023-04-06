@@ -1,0 +1,9 @@
+{
+    "common.ok": "NO",
+    "common.next": "Next",
+    "common.previous": "Previous",
+    "common.device": "{device, select, mobile {Mobile} desktop {Desktop} other {Other}}",
+    "common.formatted-number": "{num, number, ::compact-short}",
+    "common.items-counter": "{count, plural, one {{count} item} other {{count} items}}",
+    "page.home.title": "Welcome to site"
+  }

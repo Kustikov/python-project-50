@@ -25,7 +25,8 @@ def generate_diff(path1, path2):
         result.append(f"{space} {key}: {value}")
         # result = f'{result}  {key}: {value}\n'
     second_index = 2  # фильтруем по второму индексу
-    result.sort(key=lambda by_name: by_name[second_index])
+    last_index = -1
+    result.sort(key=lambda by_name: by_name[second_index:last_index])
     new_result = ""
     for i in result:
         new_result = f"{new_result} {i}\n"
