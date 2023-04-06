@@ -1,6 +1,7 @@
 import json
 import yaml
 
+
 def generate_diff(path1, path2):
     with open(f"{path1}", "r", encoding="utf-8") as f1:
         file_1 = json.load(f1)
@@ -31,7 +32,7 @@ def generate_diff(path1, path2):
     return f"{{\n{new_result}}}"
 
 
-def generate_diff_yaml(path1, path2): 
+def generate_diff_yaml(path1, path2):
     with open(f"{path1}", "r", encoding="utf-8") as f1:
         file_1 = yaml.safe_load(f1)
     with open(f"{path2}", "r", encoding="utf-8") as f2:
