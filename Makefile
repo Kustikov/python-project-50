@@ -19,5 +19,8 @@ formate:
 test:
 	poetry run pytest
 
+selfcheck:
+	poetry check
+
 test-coverage:
 	poetry run pytest --cov=gendiff --cov-report xml
