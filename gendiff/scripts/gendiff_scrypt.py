@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from gendiff import generate_diff
+from gendiff import generate_diff, generate_diff_yaml
 import argparse
 
 
@@ -18,8 +18,8 @@ def main():
     print(path2)
     if args.format == "JSON":
         generate_diff(path1, path2)
-    else:
-        print("OOPS")
+    elif args.format == "YAML":
+        generate_diff_yaml(path1, path2)
 
 
 if __name__ == "__main__":
