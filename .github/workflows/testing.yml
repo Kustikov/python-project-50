@@ -31,7 +31,7 @@ jobs:
         uses: paambaati/codeclimate-action@v3.2.0
         if: github.ref_name == 'main'
         env:
-          TEST_PYTHON_APP: ${{ secrets.CC_TEST_REPORTER_ID }}
+          TEST_PYTHON_APP: a4e0637b4c092140914283dd51568c1ae2daad56c10307b70a146094aedc2803
         with:
           coverageCommand: make test-coverage
           debug: true
