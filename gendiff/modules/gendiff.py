@@ -3,14 +3,13 @@ import yaml
 
 
 def get_dict(path):
-    if path.endswith('.json'):
+    if path.endswith(".json"):
         with open(f"{path}", "r", encoding="utf-8") as file:
             return json.load(file)
-    elif path.endswith('.yml') or path.endswith('.yaml'):
+    elif path.endswith(".yml") or path.endswith(".yaml"):
         with open(f"{path}", "r", encoding="utf-8") as file:
             return yaml.safe_load(file)
-        
-        
+
 
 def generate_diff(path1, path2):
     dict_1 = get_dict(path1)
@@ -38,4 +37,3 @@ def generate_diff(path1, path2):
         new_result = f"{new_result} {i}\n"
     print(new_result)
     return f"{{\n{new_result}}}"
-
