@@ -21,11 +21,14 @@ def generate_diff(path1, dict_2):
     keys = sorted(dict_1.keys() | dict_2.keys())
     for key in keys:
         if key not in keys_1:
-            result.append({"name": key, "value": dict_2[key], "type": "added"})
+            result.append({"name": key, "value": dict_2[key],
+                           "type": "added"})
         elif key not in keys_2:
-            result.append({"name": key, "value": dict_1[key], "type": "deleted"})
+            result.append({"name": key, "value": dict_1[key],
+                           "type": "deleted"})
         elif dict_1[key] == dict_2[key]:
-            result.append({"name": key, "value": dict_1[key], "type": "unchanged"})
+            result.append({"name": key, "value": dict_1[key],
+                           "type": "unchanged"})
         elif dict_1[key] != dict_2[key]:
             result.append(
                 {
@@ -35,20 +38,23 @@ def generate_diff(path1, dict_2):
                     "type": "changed",
                 }
             )
-    print(result)
+    stylish(result)
     return result
 
 
-def formatter(diff):
-    print(diff)
+def stylish(data):
     result = ""
-    for key in diff:
-        for i in diff[key]:
-            result = f"{result}{key} {i}\n"
-    result = result.split("\n")
-    start_index = 2
-    end_index = 3
-    result.sort(key=lambda by_name: by_name[start_index:end_index])
-    answer = "\n".join(result)
-    print(f"{{{answer}\n}}")
-    return answer
+    for i in data:
+        current_type = i["type"]
+        current_name = i["name"]
+        if current_type == "deleted":
+            result += f'- {current_name} {i["value"]}\n'
+        elif current_type == "unchanged":
+            result += f'  {current_name} {i["value"]}\n'
+        elif current_type == "changed":
+            result += f'- {current_name} {i["value1"]} \
+                    \n+ {current_name} {i["value2"]}\n'
+        elif current_type == "added":
+            result += f'+ {current_name} {i["value"]}\n'
+    print(f"{{\n{result}}}")
+    return result
