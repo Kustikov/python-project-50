@@ -39,23 +39,24 @@ def generate_diff(dict_1, dict_2):
     for key in added_keys:
         new_dict[key] = {"type": "added", "value": dict_2[key]}
         result.update(new_dict)
-    print(result)
+    sorted_result = dict(sorted(result.items()))
+    stylish(sorted_result)
     return result
 
 
 def stylish(data):
     result = ""
-    for i in data:
-        current_type = i["type"]
-        current_name = i["name"]
+    for i, v in data.items():
+        print(v["value"])
+        current_type = v["type"]
+        current_name = i
         if current_type == "deleted":
-            result += f'- {current_name} {i["value"]}\n'
+            result += f'- {current_name} {v["value"]}\n'
         elif current_type == "unchanged":
-            result += f'  {current_name} {i["value"]}\n'
+            result += f'  {current_name} {v["value"]}\n'
         elif current_type == "changed":
-            result += f'- {current_name} {i["value1"]} \
-                    \n+ {current_name} {i["value2"]}\n'
+            result += f'- {current_name} {v["value"]} \
+                    \n+ {current_name} {v["old_value"]}\n'
         elif current_type == "added":
-            result += f'+ {current_name} {i["value"]}\n'
-    # print(f"{{\n{result}}}")
-    return result
+            result += f'+ {current_name} {v["value"]}\n'
+    print(f"{{\n{result}}}")
