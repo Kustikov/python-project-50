@@ -11,34 +11,35 @@ def get_dict(path):
             return yaml.safe_load(file)
 
 
-def generate_diff(path1, dict_2):
-    result = []
-    dict_1 = get_dict(path1)
-    dict_2 = get_dict(dict_2)
-    result = []
+def generate_diff(dict_1, dict_2):
+    result = {}
     keys_1 = dict_1.keys()
     keys_2 = dict_2.keys()
-    keys = sorted(dict_1.keys() | dict_2.keys())
-    for key in keys:
-        if key not in keys_1:
-            result.append({"name": key, "value": dict_2[key],
-                           "type": "added"})
-        elif key not in keys_2:
-            result.append({"name": key, "value": dict_1[key],
-                           "type": "deleted"})
+    common_keys = keys_1 & keys_2
+    deleted_keys = keys_1 - keys_2
+    added_keys = keys_2 - keys_1
+    for key in common_keys:
+        if isinstance(dict_1[key], dict) and isinstance(dict_2[key], dict):
+            result[key] = {
+                "type": "nested",
+                "value": generate_diff(dict_1[key], dict_2[key]),
+            }
         elif dict_1[key] == dict_2[key]:
-            result.append({"name": key, "value": dict_1[key],
-                           "type": "unchanged"})
-        elif dict_1[key] != dict_2[key]:
-            result.append(
-                {
-                    "name": key,
-                    "value1": dict_1[key],
-                    "value2": dict_2[key],
-                    "type": "changed",
-                }
-            )
-    stylish(result)
+            result[key] = {"type": "unchanged", "value": dict_1[key]}
+        else:
+            result[key] = {
+                "type": "changed",
+                "old_value": dict_1[key],
+                "value": dict_2[key],
+            }
+    new_dict = {}
+    for key in deleted_keys:
+        new_dict[key] = {"type": "deleted", "value": dict_1[key]}
+        result.update(new_dict)
+    for key in added_keys:
+        new_dict[key] = {"type": "added", "value": dict_2[key]}
+        result.update(new_dict)
+    print(result)
     return result
 
 
@@ -56,5 +57,5 @@ def stylish(data):
                     \n+ {current_name} {i["value2"]}\n'
         elif current_type == "added":
             result += f'+ {current_name} {i["value"]}\n'
-    print(f"{{\n{result}}}")
+    # print(f"{{\n{result}}}")
     return result
