@@ -1,5 +1,6 @@
 import json
 import yaml
+import itertools
 
 
 def get_dict(path):
@@ -40,14 +41,14 @@ def generate_diff(dict_1, dict_2):
         new_dict[key] = {"type": "added", "value": dict_2[key]}
         result.update(new_dict)
     sorted_result = dict(sorted(result.items()))
-    stylish(sorted_result)
-    return result
+    print(sorted_result)
+    print(stylish(sorted_result))
+    return sorted_result
 
 
 def stylish(data):
     result = ""
     for i, v in data.items():
-        print(v["value"])
         current_type = v["type"]
         current_name = i
         if current_type == "deleted":
@@ -60,3 +61,20 @@ def stylish(data):
         elif current_type == "added":
             result += f'+ {current_name} {v["value"]}\n'
     print(f"{{\n{result}}}")
+
+
+def stringify(value, replacer=' ', spaces_count=1):
+    def iter_(current_value, depth):
+        if not isinstance(current_value, dict):
+            return str(current_value)
+        deep_indent_size = depth + spaces_count
+        deep_indent = replacer * deep_indent_size
+        current_indent = replacer * depth
+        lines = []
+        for key, val in current_value.items():
+            print(key, val)
+            lines.append(f'{deep_indent}{key}: {iter_(val, deep_indent_size)}')
+        result = itertools.chain("{", lines, [current_indent + "}"])
+        return '\n'.join(result)
+
+    return iter_(value, 0)
