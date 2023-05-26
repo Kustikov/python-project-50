@@ -1,6 +1,5 @@
 import json
 import yaml
-import itertools
 
 
 def get_dict(path):
@@ -10,6 +9,9 @@ def get_dict(path):
     elif path.endswith(".yml") or path.endswith(".yaml"):
         with open(f"{path}", "r", encoding="utf-8") as file:
             return yaml.safe_load(file)
+    else:
+        raise ValueError('Unsupported format. '
+                         'Formats are supported: .json .yaml .yml')
 
 
 def generate_diff(dict_1, dict_2):
@@ -42,39 +44,48 @@ def generate_diff(dict_1, dict_2):
         result.update(new_dict)
     sorted_result = dict(sorted(result.items()))
     print(sorted_result)
-    print(stylish(sorted_result))
     return sorted_result
 
 
-def stylish(data):
-    result = ""
-    for i, v in data.items():
-        current_type = v["type"]
-        current_name = i
-        if current_type == "deleted":
-            result += f'- {current_name} {v["value"]}\n'
-        elif current_type == "unchanged":
-            result += f'  {current_name} {v["value"]}\n'
-        elif current_type == "changed":
-            result += f'- {current_name} {v["value"]} \
-                    \n+ {current_name} {v["old_value"]}\n'
-        elif current_type == "added":
-            result += f'+ {current_name} {v["value"]}\n'
-    print(f"{{\n{result}}}")
+# def stylish(data):
+#     result = ""
+#     for i, v in data.items():
+#         current_type = v["type"]
+#         current_name = i
+#         if current_type == "deleted":
+#             result += f'- {current_name} {v["value"]}\n'
+#         elif current_type == "unchanged":
+#             result += f'  {current_name} {v["value"]}\n'
+#         elif current_type == "changed":
+#             result += f'- {current_name} {v["value"]} \
+#                     \n+ {current_name} {v["old_value"]}\n'
+#         elif current_type == "added":
+#             result += f'+ {current_name} {v["value"]}\n'
+#     print(f"{{\n{result}}}")
 
 
-def stringify(value, replacer=' ', spaces_count=1):
-    def iter_(current_value, depth):
-        if not isinstance(current_value, dict):
-            return str(current_value)
-        deep_indent_size = depth + spaces_count
-        deep_indent = replacer * deep_indent_size
-        current_indent = replacer * depth
-        lines = []
-        for key, val in current_value.items():
-            print(key, val)
-            lines.append(f'{deep_indent}{key}: {iter_(val, deep_indent_size)}')
-        result = itertools.chain("{", lines, [current_indent + "}"])
-        return '\n'.join(result)
-
-    return iter_(value, 0)
+# def stringify(value, replacer=' ', spaces_count=1):
+#     def iter_(current_value, depth):
+#         if not isinstance(current_value, dict):
+#             return str(current_value)
+#         deep_indent_size = depth + spaces_count
+#         deep_indent = replacer * deep_indent_size
+#         current_indent = replacer * depth
+#         lines = []
+#         for key, val in current_value.items():
+#             if val['type'] == 'unchanged':
+#                 lines.append(f'{deep_indent}  {key}:\
+# {iter_(val["value"], deep_indent_size)}')
+#             elif val['type'] == 'deleted':
+#                 lines.append(f'{deep_indent}- {key}:\
+# {iter_(val["value"], deep_indent_size)}')
+#             elif val['type'] == 'changed':
+#                 lines.append(f'{deep_indent}- {key}:\
+# {iter_(val["old_value"], deep_indent_size)}\n\
+# {deep_indent}+ {key}: {iter_(val["value"], deep_indent_size)}')
+#             elif val['type'] == 'added':
+#                 lines.append(f'{deep_indent}+ {key}:\
+# {iter_(val["value"], deep_indent_size)}')
+#         result = itertools.chain("{", lines, [current_indent + "}"])
+#         return '\n'.join(result)
+#     return iter_(value, 0)

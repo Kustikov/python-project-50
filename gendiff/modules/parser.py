@@ -11,7 +11,7 @@ parser.add_argument(
     "--format",
     help="set \
                     format of output",
-    default="JSON",
+    default="stylish",
 )
 args = parser.parse_args()
 path1 = args.first_file
