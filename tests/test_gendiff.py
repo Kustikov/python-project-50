@@ -29,7 +29,7 @@ def test_generate_diff_json():
     dict_2 = get_dict(path2)
     diff = generate_diff(dict_1, dict_2)
     assert type(diff) == dict
-    assert diff == {'follow': {'type': 'deleted', 'value': False}, 'host': {'type': 'unchanged', 'value': 'hexlet.io'}, 'proxy': {'type': 'deleted', 'value': '123.234.53.22'}, 'timeout': {'type': 'changed', 'old_value': 50, 'new_value': 20}, 'verbose': {'type': 'added', 'value': True}}
+    assert diff == {'follow': ['deleted', False], 'host': ['unchanged', 'hexlet.io'], 'proxy': ['deleted', '123.234.53.22'], 'timeout': ['changed', 50, 20], 'verbose': ['added', True]}
 
 
 def test_generate_diff_yaml():
@@ -37,7 +37,7 @@ def test_generate_diff_yaml():
     dict_2 = get_dict(path4)
     diff = generate_diff(dict_1, dict_2)
     assert type(diff) == dict
-    assert diff == {'follow': {'type': 'deleted', 'value': False}, 'host': {'type': 'unchanged', 'value': 'hexlet.io'}, 'proxy': {'type': 'deleted', 'value': '123.234.53.22'}, 'timeout': {'type': 'changed', 'old_value': 50, 'new_value': 20}, 'verbose': {'type': 'added', 'value': True}}
+    assert diff == {'follow': ['deleted', False], 'host': ['unchanged', 'hexlet.io'], 'proxy': ['deleted', '123.234.53.22'], 'timeout': ['changed', 50, 20], 'verbose': ['added', True]}
 
 
 def test_generate_diff_nested():

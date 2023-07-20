@@ -1,6 +1,5 @@
 import json
 import yaml
-import itertools
 
 
 def get_dict(path):
@@ -15,6 +14,20 @@ def get_dict(path):
                          'Formats are supported: .json .yaml .yml')
 
 
+def change_type(dict):
+    new_dict = {}
+    for key, value in dict.items():
+        if isinstance(value, type(dict)):
+            new_dict[key] = change_type(value)
+        elif isinstance(value, bool):
+            new_dict[key] = str(value).lower()
+        elif value is None:
+            new_dict[key] = 'null'
+        else:
+            new_dict[key] = value
+    return new_dict
+
+
 def generate_diff(data1, data2):
     diff = {}
     keys = sorted(set(data1.keys()).union(data2.keys()))
@@ -23,48 +36,16 @@ def generate_diff(data1, data2):
         value2 = data2.get(key)
         if isinstance(value1, dict) and isinstance(value2, dict):
             diff[key] = generate_diff(value1, value2)
-            # if nested_diff:
-            #     diff[key] = nested_diff
         elif value1 is None and value2 is not None:
-            diff[key] = {
-                "type": "added",
-                "value": value2
-            }
+            diff.setdefault(key, ['added']).append(value2)
         elif value1 is not None and value2 is None:
-            diff[key] = {
-                "type": "deleted",
-                "value": value1
-            }
+            diff.setdefault(key, ['deleted']).append(value1)
         elif value1 == value2:
-            diff[key] = {
-                "type": "unchanged",
-                "value": value1
-            }
+            diff.setdefault(key, ['unchanged']).append(value1)
         else:
-            diff[key] = {
-                "type": "changed",
-                "old_value": value1,
-                "new_value": value2
-            }
+            diff.setdefault(key, ['changed']).append(value1)
+            diff[key].append(value2)
     result_file = open("diff.txt", "w")
     result_file.write(str(diff))
     result_file.close()
     return diff
-
-
-def stringify(value, replacer=' ', spaces_count=1):
-
-    def iter_(current_value, depth):
-        if not isinstance(current_value, dict):
-            return str(current_value)
-
-        deep_indent_size = depth + spaces_count
-        deep_indent = replacer * deep_indent_size
-        current_indent = replacer * depth
-        lines = []
-        for key, val in current_value.items():
-            lines.append(f'{deep_indent}{key}: {iter_(val, deep_indent_size)}')
-        result = itertools.chain("{", lines, [current_indent + "}"])
-        return '\n'.join(result)
-
-    return iter_(value, 0)
